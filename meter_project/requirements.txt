@@ -1,0 +1,10 @@
+asgiref==3.12.1
+Django==6.1.2
+djangorestframework==3.18.3
+numpy==2.5.3
+opencv-python==5.0.0.93
+packaging==26.3
+pillow==12.3.0
+pytesseract==0.3.13
+sqlparse==0.6.0
+tzdata==2026.5

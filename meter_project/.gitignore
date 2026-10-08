@@ -1,0 +1,23 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Dataset / images
+meter_dataset/
+*.jpg
+*.jpeg
+*.png
+*.webp
+
+# Generated outputs
+preprocessed_images/
+ocr_results/
+output/
+detection_test/
+meter_yolo/
+
+# Database
+*.sqlite3
+
+# Environment
+.env
