@@ -10,6 +10,9 @@ from .meter_preprocessing import preprocess_image
 from .meter_ocr import extract_reading
 from .meter_validation import validate_reading
 
+from rest_framework import serializers
+from drf_spectacular.utils import extend_schema, OpenApiResponse, inline_serializer
+
 
 # HELPER FUNCTION
 
@@ -153,14 +156,30 @@ def process_meter_image(uploaded_file):
         "reason": reason
     }
 
-
 # SINGLE IMAGE API
 
+@extend_schema(
+    tags=["Meter Reading"],
+    summary="Read a single meter image",
+    request={
+        "multipart/form-data": {
+            "type": "object",
+            "required": ["image"],
+            "properties": {
+                "image": {
+                    "type": "string",
+                    "format": "binary",
+                }
+            },
+        }
+    },
+    responses={
+        200: OpenApiResponse(description="Meter reading result"),
+        400: OpenApiResponse(description="Invalid or missing image"),
+    },
+)
 @api_view(["POST"])
-@parser_classes([
-    MultiPartParser,
-    FormParser
-])
+@parser_classes([MultiPartParser, FormParser])
 def meter_read_api(request):
 
     uploaded_file = request.FILES.get("image")
@@ -195,11 +214,31 @@ def meter_read_api(request):
 
 # BATCH IMAGE API
 
+@extend_schema(
+    tags=["Meter Reading"],
+    summary="Read multiple meter images",
+    request={
+        "multipart/form-data": {
+            "type": "object",
+            "required": ["images"],
+            "properties": {
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "binary",
+                    },
+                }
+            },
+        }
+    },
+    responses={
+        200: OpenApiResponse(description="Batch processing results"),
+        400: OpenApiResponse(description="Images missing or invalid"),
+    },
+)
 @api_view(["POST"])
-@parser_classes([
-    MultiPartParser,
-    FormParser
-])
+@parser_classes([MultiPartParser, FormParser])
 def meter_batch_api(request):
 
     uploaded_files = request.FILES.getlist(

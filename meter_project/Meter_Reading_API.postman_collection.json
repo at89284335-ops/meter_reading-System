@@ -1,0 +1,74 @@
+{
+  "info": {
+    "_postman_id": "7a6b5c4d-1234-4567-8901-meterreading",
+    "name": "Meter Reading Extraction API",
+    "description": "API collection for single and batch meter image reading.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Single Meter Reading",
+      "item": [
+        {
+          "name": "Read Single Meter Image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "",
+                  "description": "Select one meter image"
+                }
+              ]
+            },
+            "url": "{{base_url}}/api/v1/meter/read",
+            "description": "Upload one meter image and get the extracted reading."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Batch Meter Reading",
+      "item": [
+        {
+          "name": "Read Multiple Meter Images",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": "",
+                  "description": "Select first meter image"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": "",
+                  "description": "Select second meter image"
+                }
+              ]
+            },
+            "url": "{{base_url}}/api/v1/meter/read/batch",
+            "description": "Upload multiple meter images. Add more form-data rows with the same key: images."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
